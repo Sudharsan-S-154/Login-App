@@ -63,6 +63,7 @@ body {
   margin-top: 0.4rem;
   margin-bottom: 2rem;
   padding: 0.5rem;
+  position: relative;
 }
 
 .container .input1 .forgetpassword {
@@ -108,6 +109,21 @@ body {
   /* background: red; */
   transition: transform 0.4s linear;
 }
+
+.showPassword{
+  position: relative;
+}
+
+#openEye, #closeEye{
+   position: absolute;
+   top: 30%;
+   right: 40px;
+}
+
+.far.fa-eye{
+  visibility:hidden;
+}
+
 
 /** --------------------------------------*/
 
