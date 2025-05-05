@@ -26,12 +26,14 @@ form1.addEventListener("submit", (event) => {
 
 const openEye = document.querySelector("#openEye");
 const closeEye = document.querySelector("#closeEye");
-openEye.addEventListener("click",togglePassword);
-closeEye.addEventListener("click",togglePassword);
+const openEye1 = document.querySelector("#openEye1");
+const closeEye1 = document.querySelector("#closeEye1");
+openEye.addEventListener("click",togglePassword1);
+closeEye.addEventListener("click",togglePassword1);
+openEye1.addEventListener("click",togglePassword2);
+closeEye1.addEventListener("click",togglePassword2);
 
-function togglePassword(){
-  const openEye = document.querySelector(".far.fa-eye");
-  const closeEye = document.querySelector(".fas.fa-eye-slash");
+function togglePassword1(){
   const inputPassword = document.querySelector(".showPassword .text");
 
   if (inputPassword.type == "password") {
@@ -43,5 +45,20 @@ function togglePassword(){
     inputPassword.type = "password";
     closeEye.style.visibility = "visible";
     openEye.style.visibility = "hidden";
+  }
+}
+
+function togglePassword2(){
+  const inputPassword = document.querySelector(".showPassword .signupEmail");
+
+  if (inputPassword.type == "password") {
+    inputPassword.type = "text";
+    closeEye1.style.visibility = "hidden";
+    openEye1.style.visibility = "visible";
+  }
+  else {
+    inputPassword.type = "password";
+    closeEye1.style.visibility = "visible";
+    openEye1.style.visibility = "hidden";
   }
 }

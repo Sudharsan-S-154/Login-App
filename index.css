@@ -120,6 +120,12 @@ body {
    right: 40px;
 }
 
+#openEye1, #closeEye1{
+  position: absolute;
+  top: 50%;
+  right: 40px;
+}
+
 .far.fa-eye{
   visibility:hidden;
 }
