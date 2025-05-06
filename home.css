@@ -1,0 +1,77 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  min-height: 100vh;
+  background-color: #151922;
+  font-family: "Roboto", sans-serif;
+}
+
+.header {
+  margin-top: 1rem;
+}
+
+.header .nav {
+  display: flex;
+  justify-content: space-around;
+}
+.header .nav .logo {
+  font-family: "DM Serif Display", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 3rem;
+  background: url(travelblog.jpg) top;
+  background-clip: text;
+  background-size: cover;
+  color: transparent;
+}
+
+.header .nav .addButton .btn {
+  height: 40px;
+  width: 100px;
+  font-size: 1rem;
+  background-color: transparent;
+  color: white;
+  transform: translateY(10px);
+  border: 1px solid red;
+  border-radius: 5px;
+}
+
+.header .nav .addButton .btn:hover {
+  box-shadow: 0 0 5px red, 0 0 10px red, 0 0 15px red, 0 0 20px red;
+  background-color: red;
+  color: black;
+  cursor: pointer;
+}
+
+.main .addSection {
+  height: auto;
+  width: 450px;
+  background-color: powderblue;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
+  border-radius: 10px;
+}
+
+.main .addForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 2rem;
+}
+
+.addForm input, .addForm textarea{
+    width: 80%;
+    padding: .8rem;
+}
+
+.blogText{
+    text-align: center;
+}
