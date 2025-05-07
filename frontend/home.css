@@ -3,17 +3,19 @@ body {
   padding: 0;
   box-sizing: border-box;
   min-height: 100vh;
-  background-color: #151922;
+  background-color: #16191F;
   font-family: "Roboto", sans-serif;
 }
 
 .header {
-  margin-top: 1rem;
+  padding-block: 1rem;
+  background-color: #21242F;
 }
 
 .header .nav {
   display: flex;
   justify-content: space-around;
+
 }
 .header .nav .logo {
   font-family: "DM Serif Display", serif;
@@ -26,7 +28,7 @@ body {
   color: transparent;
 }
 
-.header .nav .addButton .btn {
+.header .nav .addButton .btn, .submitButton {
   height: 40px;
   width: 100px;
   font-size: 1rem;
@@ -37,7 +39,7 @@ body {
   border-radius: 5px;
 }
 
-.header .nav .addButton .btn:hover {
+.header .nav .addButton .btn:hover , .submitButton:hover{
   box-shadow: 0 0 5px red, 0 0 10px red, 0 0 15px red, 0 0 20px red;
   background-color: red;
   color: black;
@@ -47,16 +49,18 @@ body {
 .main .addSection {
   height: auto;
   width: 450px;
-  background-color: powderblue;
+  background-color: #21242F;
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
+  transform: translate(-50%, -44%);
+  /* display: flex; */
   flex-direction: column;
   justify-content: center;
   padding: 2rem;
   border-radius: 10px;
+  display: none;  
+  /* opacity: 0; */
 }
 
 .main .addForm {
@@ -65,6 +69,15 @@ body {
   align-items: center;
   width: 100%;
   gap: 2rem;
+}
+
+.blogandcancel{
+   display: flex;
+}
+
+.blogandcancel .fa.fa-close{
+  transform: translateX(4.5rem);
+  cursor: pointer;
 }
 
 .addForm input, .addForm textarea{
