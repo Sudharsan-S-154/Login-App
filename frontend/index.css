@@ -4,15 +4,16 @@ body {
   box-sizing: border-box;
   display: grid;
   place-items: center;
-  background-color: #f5f5f5;
+  background-color: #16191F;
   min-height: 100vh;
   font-family: "Roboto", sans-serif;
+  color: white;
 }
 
 .container {
   height: auto;
   width: 460px;
-  background-color: white;
+  background-color: #21242F;
   box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   overflow: hidden;
@@ -118,12 +119,14 @@ body {
    position: absolute;
    top: 30%;
    right: 40px;
+   color: black;
 }
 
 #openEye1, #closeEye1{
   position: absolute;
   top: 50%;
   right: 40px;
+  color: black;
 }
 
 .far.fa-eye{
@@ -175,7 +178,7 @@ body {
 .divider hr {
   flex: 1;
   border: none;
-  border-top: 0.5px solid black;
+  border-top: 0.5px solid white;
 }
 
 .container .input2 .text {
