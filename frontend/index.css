@@ -4,16 +4,18 @@ body {
   box-sizing: border-box;
   display: grid;
   place-items: center;
-  background-color: #16191F;
+  background-color: #16191f;
   min-height: 100vh;
   font-family: "Roboto", sans-serif;
+  width: 100%;
+  overflow: hidden;
   color: white;
 }
 
 .container {
   height: auto;
   width: 460px;
-  background-color: #21242F;
+  background-color: #21242f;
   box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   overflow: hidden;
@@ -111,28 +113,36 @@ body {
   transition: transform 0.4s linear;
 }
 
-.showPassword{
+.showPassword {
   position: relative;
 }
 
-#openEye, #closeEye{
-   position: absolute;
-   top: 30%;
-   right: 40px;
-   color: black;
+#openEye,
+#closeEye {
+  position: absolute;
+  top: 30%;
+  right: 40px;
+  color: black;
 }
 
-#openEye1, #closeEye1{
+#openEye1,
+#closeEye1 {
   position: absolute;
   top: 50%;
   right: 40px;
   color: black;
 }
 
-.far.fa-eye{
-  visibility:hidden;
+#openEye:hover,
+#closeEye:hover,
+#openEye1:hover,
+#closeEye1:hover {
+  cursor: pointer;
 }
 
+.far.fa-eye {
+  visibility: hidden;
+}
 
 /** --------------------------------------*/
 
@@ -182,7 +192,7 @@ body {
 }
 
 .container .input2 .text {
-  width: 40%;
+  width: 90%;
   margin-left: 1rem;
   height: 2rem;
   padding: 0.4rem;
@@ -204,4 +214,26 @@ body {
   border: none;
   background-color: lightgrey;
   color: grey;
+}
+
+/**------------------------------*/
+
+.success {
+  background-color: green;
+  position: absolute;
+  top: 30px;
+  right: -500px;
+  color: black;
+  padding: 1rem;
+  transition: all 2 linear;
+}
+
+.failure {
+  position: absolute;
+  top: 30px;
+  right: -500px;
+  background-color: red;
+  color: black;
+  padding: 1rem;
+  transition: all 2 linear;
 }

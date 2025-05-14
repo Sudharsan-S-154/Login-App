@@ -7,12 +7,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+import com.entity.UserEntity;
+
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
 @Component
+
 public class JwtUtility {
 
 	@Value("${jwtSecret}")
@@ -21,8 +24,9 @@ public class JwtUtility {
 	@Value("${expirationDate}")
 	private Integer expirationDate;
 
-	private String generateToken(Authentication auth) {
-		return Jwts.builder().setSubject(auth.getName()).setIssuedAt(new Date())
+	public String generateToken(Authentication auth) {
+		UserDetailsImp user = (UserDetailsImp) auth.getPrincipal();
+		return Jwts.builder().setSubject(user.getEmail()).setIssuedAt(new Date())
 				.setExpiration(new Date(System.currentTimeMillis() + expirationDate))
 				.signWith(getKey(), SignatureAlgorithm.HS256).compact();
 	}
@@ -31,7 +35,7 @@ public class JwtUtility {
 		return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
 	}
 
-	private Boolean validateToken(String token) {
+	public Boolean validateToken(String token) {
 		try {
 			Jwts.parserBuilder().setSigningKey(getKey()).build().parseClaimsJws(token);
 			return true;
@@ -40,7 +44,7 @@ public class JwtUtility {
 		}
 	}
 
-	private String getUserNameFromToken(String token) {
+	public String getUserNameFromToken(String token) {
 		return Jwts.parserBuilder().setSigningKey(getKey()).build().parseClaimsJws(token).getBody().getSubject();
 	}
 

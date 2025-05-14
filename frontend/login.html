@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="index.css">
-    <script defer src="main.js"></script>
+    <script defer src="login.js"></script>
     <!-- <script defer src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script> -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 
@@ -22,15 +22,13 @@
             <form id="input1" class="input1">
                 <h2 class="loginLabel">Log in</h2>
 
-                <input type="text" class="text" placeholder="Email address*">
+                <input type="text" class="text loginmail" placeholder="Email address*">
 
                 <div class="showPassword">
-                    <input type="password" class="text" placeholder="Your password*">
+                    <input type="password" class="text loginpassword" placeholder="Your password*">
                     <i id="openEye" class='far fa-eye' style='font-size:18px'></i>
                     <i id="closeEye" class='fas fa-eye-slash' style='font-size:18px'></i>
                 </div>
-
-
 
                 <div class="forgetpassword">
                     <a href="#">Forget your password</a>
@@ -63,16 +61,16 @@
                     <hr>
                 </div>
 
-                <input type="text" class="text" placeholder="First name*">
-                <input type="text" class="text" placeholder="Last name*">
-                <input type="text" class="text signupEmail" placeholder="Email address*">
+                <input type="text" class="text username" placeholder="Username*" required>
+                <!-- <input type="text" class="text" placeholder="Last name*"> -->
+                <input type="text" class="text signupEmail" placeholder="Email address*" required>
 
                 <div class="showPassword">
-                    <input type="password" class="text signupEmail" placeholder="Password*">
+                    <input type="password" class="text signupEmail password" placeholder="Password*" required>
                     <i id="openEye1" class='far fa-eye' style='font-size:18px'></i>
                     <i id="closeEye1" class='fas fa-eye-slash' style='font-size:18px'></i>
                 </div>
-                
+
 
                 <div class="signupButton">
                     <button class="btn">Sign up</button>
@@ -80,6 +78,14 @@
             </form>
         </section>
     </article>
+
+    <section class="success">
+        
+    </section>
+    <section class="failure">
+        
+    </section>
+
 </body>
 
 </html>
