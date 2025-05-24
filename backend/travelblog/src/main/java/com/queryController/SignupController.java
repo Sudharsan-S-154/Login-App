@@ -4,8 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Model.LoginModel;
@@ -36,7 +39,17 @@ public class SignupController {
 		ResponseModel result = loginService.saveLoginDetails(loginModel);
 
 		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	
+	@CrossOrigin(origins = "http://127.0.0.1:5500", allowCredentials = "true", allowedHeaders = "*", methods = {
+			RequestMethod.GET, RequestMethod.OPTIONS })
+	@GetMapping("/user")
+	public ResponseEntity<?> getBlogDetails() throws Exception {
 
+		ResponseModel result = loginService.getUser();
+
+		return new ResponseEntity<>(result, HttpStatus.OK);
+		
 	}
 
 }

@@ -7,6 +7,7 @@
     <title>Document</title>
     <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="home.css">
     <script defer src="home.js"></script>
 
@@ -21,24 +22,82 @@
             </div>
             <div class="addButton">
                 <button class="btn">Add Blog</button>
+                <div class="menuIcon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <div class="menuItemBox">
+                        <div class="myBlogButton">My blogs</div>
+                        <div class="logoutButton" type="button">Logout</div>
+                    </div>
+                </div>
             </div>
         </nav>
     </header>
-    <main class="main">
+    <main class="main1">
+        <section class="allBlogs">
+        </section>
+    </main>
+
+    <main class="main2">
         <section class="addSection">
             <form class="addForm">
                 <div class="blogandcancel">
                     <div class="blogText" style="font-size: 1.5rem; color: #E0E0E0 ;"> Add Your Travel Experience </div>
                     <i class="fa fa-close" style="font-size:24px; color: #E0E0E0;"></i>
                 </div>
-                <input type="text" class="firstName*" placeholder="Firstname">
-                <input type="text" class="lastName*" placeholder="LastName">
-                <input type="text" class="travelSpot*" placeholder="TravelSpot">
-                <textarea class="experience*" placeholder="Experience"></textarea>
-                <input type="number" min="1" max="5" placeholder="rating">
+                <input type="text" class="name" placeholder="Name*" required>
+                <input type="text" class="phno" placeholder="Phno*" required>
+                <input type="text" class="travelSpot" placeholder="TravelSpot*" required>
+                <textarea class="experience" placeholder="Experience*" required></textarea>
+                <input class="rating" type="number" min="1" max="5" placeholder="Rating*" required>
                 <!-- <label style="display: inline;">Upload your memories</label><input type="file">  -->
                 <button class="submitButton">submit</button>
             </form>
+        </section>
+
+        <section class="viewOneBlogMain">
+            <section class="viewOneBlog">
+                <div class="oneBlogImg">
+                    <img src="travelblog.jpg" alt="No content available">
+                </div>
+                <div class="blogInfo">
+                    <div class="blogOne">
+                        <div class="label">Name :</div>
+                        <div class="bName"></div>
+                    </div>
+                    <div class="blogOne">
+                        <div class="label">Email :</div>
+                        <div class="bEmail"></div>
+                    </div>
+                    <div class="blogOne">
+                        <div class="label">Phno :</div>
+                        <div class="bPhno"></div>
+                    </div>
+                    <div class="blogOne">
+                        <div class="label">TravelSpot :</div>
+                        <div class="bTravelSpot"></div>
+                    </div>
+                    <div class="blogOne">
+                        <div class="label">Experience :</div>
+                        <div class="bExperience" style="height: 80px;"></div>
+                    </div>
+                    <div class="blogOne">
+                        <div class="label">Rating :</div>
+                        <div class="bRating"></div>
+                    </div>
+                </div>
+                <div class="cancelButton">
+                    <i class="fa fa-close blog" style="font-size:24px; color: #E0E0E0;"></i>
+                </div>
+            </section>
+        </section>
+
+
+        <section class="success">
+        </section>
+
+        <section class="failure">
         </section>
     </main>
 </body>
