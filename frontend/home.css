@@ -200,11 +200,23 @@ body {
   filter: brightness(50%);
 } */
 
-.viewBlog {
+.allButton{
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%,-50%);
+  gap: 2rem;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.viewBlog {
+  /* position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); */
   visibility: hidden;
   height: 30px;
   width: 70px;
@@ -216,6 +228,48 @@ body {
 }
 
 .viewBlog:hover {
+  box-shadow: 0 0 5px red, 0 0 10px red, 0 0 15px;
+  background-color: red;
+  color: black;
+}
+
+.editBlog {
+  /* position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); */
+  visibility: hidden;
+  height: 30px;
+  width: 70px;
+  color: white;
+  cursor: pointer;
+  background-color: transparent;
+  border: 2px solid red;
+  border-radius: 5px;
+}
+
+.editBlog:hover {
+  box-shadow: 0 0 5px red, 0 0 10px red, 0 0 15px;
+  background-color: red;
+  color: black;
+}
+
+.deleteBlog {
+  /* position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); */
+  visibility: hidden;
+  height: 30px;
+  width: 70px;
+  color: white;
+  cursor: pointer;
+  background-color: transparent;
+  border: 2px solid red;
+  border-radius: 5px;
+}
+
+.deleteBlog:hover {
   box-shadow: 0 0 5px red, 0 0 10px red, 0 0 15px;
   background-color: red;
   color: black;
