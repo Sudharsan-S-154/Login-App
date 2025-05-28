@@ -56,6 +56,22 @@
             </form>
         </section>
 
+        <section class="editSection">
+            <form class="editForm">
+                <div class="blogandcancel">
+                    <div class="blogText" style="font-size: 1.5rem; color: #E0E0E0 ;"> Edit Your Travel Experience </div>
+                    <i class="fa fa-close edit" style="font-size:24px; color: #E0E0E0;"></i>
+                </div>
+                <input type="text" class="editName" placeholder="Name*" required>
+                <input type="text" class="editPhno" placeholder="Phno*" required>
+                <input type="text" class="editTravelSpot" placeholder="TravelSpot*" required>
+                <textarea class="editExperience" placeholder="Experience*" required></textarea>
+                <input class="editRating" type="number" min="1" max="5" placeholder="Rating*" required>
+                <!-- <label style="display: inline;">Upload your memories</label><input type="file">  -->
+                <button class="submitEditButton">submit</button>
+            </form>
+        </section>
+
         <section class="viewOneBlogMain">
             <section class="viewOneBlog">
                 <div class="oneBlogImg">
@@ -93,6 +109,13 @@
             </section>
         </section>
 
+        <section class="deleteBlogSection">
+            <div class="deleteLines">"The end is near... for this post. Continue?"</div>
+            <div class="deleteBlogButton">
+                <button class="cancelDeleteButton">Cancel</button>
+                <button class="confirmDeleteButton">Delete</button>
+            </div>
+        </section>
 
         <section class="success">
         </section>

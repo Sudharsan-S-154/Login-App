@@ -2,6 +2,7 @@ package com.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -80,6 +81,24 @@ public class BlogService {
 
 		return responseModel;
 
+	}
+
+	public ResponseModel deleteBlog(String blogId) {
+		ResponseModel response = new ResponseModel();
+		try {
+			Optional<BlogEntity> tempBlog = blogRepository.findById(blogId);
+			if (tempBlog.isPresent()) {
+				BlogEntity blog = tempBlog.get();
+				blogRepository.deleteById(blogId);
+				response.setData("Blog deleted successfully");
+			}
+			else {
+				response.setError("Error occurs");
+			}
+		} catch (Exception e) {
+                response.setError("Error occurs!!");
+		}
+		return response;
 	}
 
 }

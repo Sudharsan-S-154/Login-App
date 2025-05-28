@@ -9,6 +9,8 @@ import com.entity.BlogEntity;
 @Repository
 public interface BlogRepository extends JpaRepository<BlogEntity, String>,JpaSpecificationExecutor<BlogEntity> {
 
+	void deleteById(BlogEntity blog);
+
 //	UserEntity getByEmail(String email);
 
 }

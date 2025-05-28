@@ -1,16 +1,28 @@
 const form1 = document.querySelector(".main2 .addSection");
+const form2 = document.querySelector(".main2 .editSection");
 const body = document.getElementsByTagName("body");
 
 const addBlogButton = document.querySelector(".addButton .btn");
 const closeBlogButton = document.querySelector(".blogandcancel .fa.fa-close");
+const closeEditButton = document.querySelector(
+  ".blogandcancel .fa.fa-close.edit"
+);
 
+let changeIndex;
+let deleteChangeIndex;
 const addBlogForm = document.querySelector(".addForm");
+const submitEditButton = document.querySelector(".submitEditButton");
+// console.log(submitEditButton +"           ---------------------          >");
 
 const success = document.querySelector(".success");
 const failure = document.querySelector(".failure");
 
 const main1 = document.querySelector(".main1");
 const main2 = document.querySelector(".main2");
+
+const deleteBlogSection = document.querySelector(".deleteBlogSection");
+const cancelDeleteButton = document.querySelector(".cancelDeleteButton");
+const confirmDeleteButton = document.querySelector(".confirmDeleteButton");
 
 addBlogButton.addEventListener("click", () => {
   // main1.style.filter="blur(20px)";
@@ -75,7 +87,40 @@ addBlogForm.addEventListener("submit", async (event) => {
 
   const token = localStorage.getItem("token");
   console.log(token);
-  addOrEditBlog(requestObject, token);
+  // addOrEditBlog(requestObject, token);
+  const result = await fetch("http://localhost:8080/blog", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(requestObject),
+  });
+
+  const resultJson = await result.json();
+  console.log(resultJson);
+  // debugger;
+  if (resultJson.data != null) {
+    success.textContent = "Blog is added successfully";
+    success.style.display = "block";
+    success.style.right = "30px";
+    setTimeout(() => {
+      success.style.right = "-500px";
+      success.style.display = "none";
+      location.reload();
+    }, 1500);
+    setTimeout(() => {
+      form1.style.display = "none";
+    }, 500);
+  } else {
+    failure.textContent = resultJson.error;
+    failure.style.right = "30px";
+    failure.style.display = "block";
+    setTimeout(() => {
+      failure.style.right = "-500px";
+      failure.style.display = "none";
+    }, 2000);
+  }
 });
 
 // --------------------
@@ -107,6 +152,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const resultJson = await result.json();
   console.log(resultJson);
   if (resultJson.data != null) {
+    allBlogList.length = 0;
     allBlogList = [...resultJson.data];
     createBlog(resultJson);
     addStylesToBlog();
@@ -130,6 +176,102 @@ document.addEventListener("DOMContentLoaded", async () => {
     createBlog(resultBlogJson);
     addStylesToBlog();
   });
+
+  submitEditButton.addEventListener("click", async (event) => {
+    event.preventDefault();
+    // event.stopPropagation();
+    const name = document.querySelector(".editName").value;
+    const phno = document.querySelector(".editPhno").value;
+    const travelSpot = document.querySelector(".editTravelSpot").value;
+    const experience = document.querySelector(".editExperience").value;
+    const rating = document.querySelector(".editRating").value;
+
+    let id = allBlogList[changeIndex].id;
+    console.log("id : " + id);
+    let requestObject = {
+      id: id,
+      name: name,
+      phno: phno,
+      travelSpot: travelSpot,
+      experience: experience,
+      rating: rating,
+    };
+
+    const token = localStorage.getItem("token");
+    console.log(token);
+    const result = await fetch("http://localhost:8080/blog", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(requestObject),
+    });
+
+    const resultJson = await result.json();
+    console.log("result json ==>" + resultJson.data.name);
+    if (resultJson.data != null) {
+      success.textContent = "Blog is edited successfully";
+      success.style.display = "block";
+      success.style.right = "30px";
+      setTimeout(() => {
+        success.style.right = "-500px";
+        success.style.display = "none";
+        location.reload();
+      }, 1500);
+      setTimeout(() => {
+        form2.style.display = "none";
+      }, 500);
+    } else {
+      failure.textContent = resultJson.error;
+      failure.style.right = "30px";
+      failure.style.display = "block";
+      setTimeout(() => {
+        failure.style.right = "-500px";
+        failure.style.display = "none";
+      }, 2000);
+    }
+  });
+
+  confirmDeleteButton.addEventListener("click", async () => {
+    let id = allBlogList[deleteChangeIndex].id;
+    console.log("id : " + id);
+
+    const token = localStorage.getItem("token");
+    console.log(token);
+    let deleteUrl = `http://localhost:8080/blog/${id}`;
+    const result = await fetch(deleteUrl, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      }
+    });
+
+    const resultJson = await result.json();
+    // console.log("result json ==>" + resultJson.data.name);
+    if (resultJson.data != null) {
+      success.textContent = "Blog is deleted successfully";
+      success.style.display = "block";
+      success.style.right = "30px";
+      setTimeout(() => {
+        success.style.right = "-500px";
+        success.style.display = "none";
+        location.reload();
+      }, 1500);
+      setTimeout(() => {
+        form2.style.display = "none";
+      }, 500);
+    } else {
+      failure.textContent = resultJson.error;
+      failure.style.right = "30px";
+      failure.style.display = "block";
+      setTimeout(() => {
+        failure.style.right = "-500px";
+        failure.style.display = "none";
+      }, 2000);
+    }
+  });
 });
 
 // -------method to create all Blogs and my blogs
@@ -149,9 +291,7 @@ function createBlog(resultJson1) {
       }
     }
 
-    console.log(rating);
-
-    if (userDetails.role === "admin") {
+    if (userDetails.role === "admin" ||userDetails.role === "user") {
       // console.log("----------------->");
       allBlog.innerHTML = `<div class="buttonAndImg">
                             <img src= "travelblog.jpg"  alt="No content available" class="blogImg"> 
@@ -248,16 +388,33 @@ function addStylesToBlog() {
     });
 
     editBlog.addEventListener("click", async () => {
-      document.querySelector(".name").value = allBlogList[index].name;
-      document.querySelector(".phno").value = allBlogList[index].phno;
-      document.querySelector(".travelSpot").value =
+      document.querySelector(".editName").value = allBlogList[index].name;
+      document.querySelector(".editPhno").value = allBlogList[index].phno;
+      document.querySelector(".editTravelSpot").value =
         allBlogList[index].travelSpot;
-      document.querySelector(".experience").value =
+      document.querySelector(".editExperience").value =
         allBlogList[index].experience;
       console.log(allBlogList[index].rating);
-      document.querySelector(".rating").value = allBlogList[index].rating;
+      document.querySelector(".editRating").value = allBlogList[index].rating;
       main1.style.display = "none";
-      form1.style.display = "flex";
+      form2.style.display = "flex";
+      changeIndex = index;
+    });
+
+    closeEditButton.addEventListener("click", () => {
+      main1.style.display = "inline-block";
+      form2.style.display = "none";
+    });
+
+    deleteBlog.addEventListener("click", () => {
+      main1.style.display = "none";
+      deleteBlogSection.style.display = "flex";
+      deleteChangeIndex = index;
+    });
+
+    cancelDeleteButton.addEventListener("click", () => {
+      main1.style.display = "inline-block";
+      deleteBlogSection.style.display = "none";
     });
 
     const faCloseBlog = document.querySelector(".fa.fa-close.blog");
