@@ -8,6 +8,7 @@ const closeEditButton = document.querySelector(
   ".blogandcancel .fa.fa-close.edit"
 );
 
+let myblog = false;
 let changeIndex;
 let deleteChangeIndex;
 const addBlogForm = document.querySelector(".addForm");
@@ -155,10 +156,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     allBlogList.length = 0;
     allBlogList = [...resultJson.data];
     createBlog(resultJson);
-    addStylesToBlog();
+    addStylesToBlogAdmin();
   }
 
   myBlogButton.addEventListener("click", async () => {
+    if(myBlogButton.textContent=="All Blogs"){
+        location.reload();
+    }
+    myblog = true;
+    myBlogButton.textContent = "All Blogs";
     allBlogs.innerHTML = "";
     console.log("->" + userDetails.email);
     let url = `http://localhost:8080/blog?email=${userDetails.email}`;
@@ -174,7 +180,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       console.log(x);
     });
     createBlog(resultBlogJson);
-    addStylesToBlog();
+    addStylesToBlogAdmin();
   });
 
   submitEditButton.addEventListener("click", async (event) => {
@@ -245,7 +251,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
-      }
+      },
     });
 
     const resultJson = await result.json();
@@ -279,19 +285,19 @@ function createBlog(resultJson1) {
   resultJson1.data.forEach((blog) => {
     let allBlog = document.createElement("div");
     allBlog.classList.add("allBlog");
-    let rating = "";
+    let ratingStar = "";
     let count = 0;
     const ratingResponse = blog.rating;
     for (let i = 1; i <= 5; i++) {
       if (count < ratingResponse) {
-        rating += `<span class="fa fa-star checked"></span>&nbsp`;
+        ratingStar += `<span class="fa fa-star checked"></span>&nbsp`;
         count++;
       } else {
-        rating += `<span class="fa fa-star"></span>`;
+        ratingStar += `<span class="fa fa-star"></span>`;
       }
     }
 
-    if (userDetails.role === "admin" ||userDetails.role === "user") {
+    if (userDetails.role === "admin" || myblog==true) {
       // console.log("----------------->");
       allBlog.innerHTML = `<div class="buttonAndImg">
                             <img src= "travelblog.jpg"  alt="No content available" class="blogImg"> 
@@ -303,18 +309,20 @@ function createBlog(resultJson1) {
                           </div>
                           <div class="nameAndRating">
                            <h4 class="travelSpotName"> ${blog.travelSpot} </h4>   
-                           <div class="rating">${rating}</div>
+                           <div class="ratingStar">${ratingStar}</div>
                           </div>
                           
                         `;
     } else {
       allBlog.innerHTML = `<div class="buttonAndImg">
                             <img src= "travelblog.jpg"  alt="No content available" class="blogImg"> 
-                            <button class="viewBlog">View</button>
+                            <div class="allButton">
+                             <button class="viewBlog">View</button>
+                            </div>
                           </div>
                           <div class="nameAndRating">
                            <h4 class="travelSpotName"> ${blog.travelSpot} </h4>   
-                           <div class="rating">${rating}</div>
+                           <div class="ratingStar">${ratingStar}</div>
                           </div>
                           
                         `;
@@ -323,106 +331,208 @@ function createBlog(resultJson1) {
   });
 }
 // -------------add styles to blog.
-function addStylesToBlog() {
+function addStylesToBlogAdmin() {
   const buttonAndImgs = document.querySelectorAll(".buttonAndImg");
   const blogImgs = document.querySelectorAll(".blogImg");
   const viewBlogs = document.querySelectorAll(".viewBlog");
   const editBlogs = document.querySelectorAll(".editBlog");
   const deleteBlogs = document.querySelectorAll(".deleteBlog");
 
-  buttonAndImgs.forEach((buttonAndImg, index) => {
-    const viewBlog = viewBlogs[index];
-    const editBlog = editBlogs[index];
-    const deleteBlog = deleteBlogs[index];
-    const allButton = [viewBlog, editBlog, deleteBlog];
-    const blogImg = blogImgs[index];
+  if (userDetails.role == "admin" || myblog==true) {
+    buttonAndImgs.forEach((buttonAndImg, index) => {
+      const viewBlog = viewBlogs[index];
+      const editBlog = editBlogs[index];
+      const deleteBlog = deleteBlogs[index];
+      const allButton = [viewBlog, editBlog, deleteBlog];
+      const blogImg = blogImgs[index];
 
-    allButton.forEach((button) => {
-      button.addEventListener("mouseenter", () => {
+      allButton.forEach((button) => {
+        button.addEventListener("mouseenter", () => {
+          viewBlog.style.visibility = "visible";
+          editBlog.style.visibility = "visible";
+          deleteBlog.style.visibility = "visible";
+          blogImg.style.filter = "brightness(50%)";
+        });
+
+        button.addEventListener("mouseleave", () => {
+          viewBlog.style.visibility = "visible";
+          editBlog.style.visibility = "visible";
+          deleteBlog.style.visibility = "visible";
+          blogImg.style.filter = "brightness(50%)";
+        });
+      });
+
+      buttonAndImg.addEventListener("mouseenter", () => {
         viewBlog.style.visibility = "visible";
         editBlog.style.visibility = "visible";
         deleteBlog.style.visibility = "visible";
         blogImg.style.filter = "brightness(50%)";
       });
+      buttonAndImg.addEventListener("mouseout", () => {
+        viewBlog.style.visibility = "hidden";
+        editBlog.style.visibility = "hidden";
+        deleteBlog.style.visibility = "hidden";
+        blogImg.style.filter = "brightness(100%)";
+      });
 
-      button.addEventListener("mouseleave", () => {
-        viewBlog.style.visibility = "visible";
-        editBlog.style.visibility = "visible";
-        deleteBlog.style.visibility = "visible";
-        blogImg.style.filter = "brightness(50%)";
+      const viewOneBlogMain = document.querySelector(".viewOneBlogMain");
+      const bName = document.querySelector(".bName");
+      const bEmail = document.querySelector(".bEmail");
+      const bPhno = document.querySelector(".bPhno");
+      const bTravelSpot = document.querySelector(".bTravelSpot");
+      const bExperience = document.querySelector(".bExperience");
+      const bRating = document.querySelector(".bRating");
+
+      viewBlog.addEventListener("click", () => {
+        bName.textContent = allBlogList[index].name;
+        bEmail.textContent = allBlogList[index].email;
+        bPhno.textContent = allBlogList[index].phno;
+        bTravelSpot.textContent = allBlogList[index].travelSpot;
+        bExperience.textContent = allBlogList[index].experience;
+        bRating.textContent = allBlogList[index].rating;
+
+        viewOneBlogMain.style.display = "inline-block";
+        main1.style.display = "none";
+
+        // main1.style.visibility="hidden";
+      });
+
+      editBlog.addEventListener("click", async () => {
+        document.querySelector(".editName").value = allBlogList[index].name;
+        document.querySelector(".editPhno").value = allBlogList[index].phno;
+        document.querySelector(".editTravelSpot").value =
+          allBlogList[index].travelSpot;
+        document.querySelector(".editExperience").value =
+          allBlogList[index].experience;
+        console.log(allBlogList[index].rating);
+        document.querySelector(".editRating").value = allBlogList[index].rating;
+        main1.style.display = "none";
+        form2.style.display = "flex";
+        changeIndex = index;
+      });
+
+      closeEditButton.addEventListener("click", () => {
+        main1.style.display = "inline-block";
+        form2.style.display = "none";
+        viewBlog.style.visibility = "hidden";
+        editBlog.style.visibility = "hidden";
+        deleteBlog.style.visibility = "hidden";
+        blogImg.style.filter = "brightness(100%)";
+      });
+
+      deleteBlog.addEventListener("click", () => {
+        main1.style.display = "none";
+        deleteBlogSection.style.display = "flex";
+        deleteChangeIndex = index;
+      });
+
+      cancelDeleteButton.addEventListener("click", () => {
+        main1.style.display = "inline-block";
+        deleteBlogSection.style.display = "none";
+      });
+
+      const faCloseBlog = document.querySelector(".fa.fa-close.blog");
+      faCloseBlog.addEventListener("click", () => {
+        viewOneBlogMain.style.display = "none";
+        main1.style.display = "inline-block";
+        viewBlog.style.visibility = "hidden";
+        editBlog.style.visibility = "hidden";
+        deleteBlog.style.visibility = "hidden";
+        blogImg.style.filter = "brightness(100%)";
       });
     });
+  } else {
+    buttonAndImgs.forEach((buttonAndImg, index) => {
+      const viewBlog = viewBlogs[index];
+      // const editBlog = editBlogs[index];
+      // const deleteBlog = deleteBlogs[index];
+      const allButton = [viewBlog];
+      const blogImg = blogImgs[index];
 
-    buttonAndImg.addEventListener("mouseenter", () => {
-      viewBlog.style.visibility = "visible";
-      editBlog.style.visibility = "visible";
-      deleteBlog.style.visibility = "visible";
-      blogImg.style.filter = "brightness(50%)";
+      allButton.forEach((button) => {
+        button.addEventListener("mouseenter", () => {
+          viewBlog.style.visibility = "visible";
+          blogImg.style.filter = "brightness(50%)";
+        });
+
+        button.addEventListener("mouseleave", () => {
+          viewBlog.style.visibility = "visible";
+          blogImg.style.filter = "brightness(50%)";
+        });
+      });
+
+      buttonAndImg.addEventListener("mouseenter", () => {
+        viewBlog.style.visibility = "visible";
+        blogImg.style.filter = "brightness(50%)";
+      });
+      buttonAndImg.addEventListener("mouseout", () => {
+        viewBlog.style.visibility = "hidden";
+        blogImg.style.filter = "brightness(100%)";
+      });
+
+      const viewOneBlogMain = document.querySelector(".viewOneBlogMain");
+      const bName = document.querySelector(".bName");
+      const bEmail = document.querySelector(".bEmail");
+      const bPhno = document.querySelector(".bPhno");
+      const bTravelSpot = document.querySelector(".bTravelSpot");
+      const bExperience = document.querySelector(".bExperience");
+      const bRating = document.querySelector(".bRating");
+
+      viewBlog.addEventListener("click", () => {
+        bName.textContent = allBlogList[index].name;
+        bEmail.textContent = allBlogList[index].email;
+        bPhno.textContent = allBlogList[index].phno;
+        bTravelSpot.textContent = allBlogList[index].travelSpot;
+        bExperience.textContent = allBlogList[index].experience;
+        bRating.textContent = allBlogList[index].rating;
+
+        viewOneBlogMain.style.display = "inline-block";
+        main1.style.display = "none";
+
+        // main1.style.visibility="hidden";
+      });
+
+      // editBlog.addEventListener("click", async () => {
+      //   document.querySelector(".editName").value = allBlogList[index].name;
+      //   document.querySelector(".editPhno").value = allBlogList[index].phno;
+      //   document.querySelector(".editTravelSpot").value =
+      //     allBlogList[index].travelSpot;
+      //   document.querySelector(".editExperience").value =
+      //     allBlogList[index].experience;
+      //   console.log(allBlogList[index].rating);
+      //   document.querySelector(".editRating").value = allBlogList[index].rating;
+      //   main1.style.display = "none";
+      //   form2.style.display = "flex";
+      //   changeIndex = index;
+      // });
+
+      // closeEditButton.addEventListener("click", () => {
+      //   main1.style.display = "inline-block";
+      //   form2.style.display = "none";
+      //   viewBlog.style.visibility = "hidden";
+      //   blogImg.style.filter = "brightness(100%)";
+      // });
+
+      // deleteBlog.addEventListener("click", () => {
+      //   main1.style.display = "none";
+      //   deleteBlogSection.style.display = "flex";
+      //   deleteChangeIndex = index;
+      // });
+
+      // cancelDeleteButton.addEventListener("click", () => {
+      //   main1.style.display = "inline-block";
+      //   deleteBlogSection.style.display = "none";
+      // });
+
+      const faCloseBlog = document.querySelector(".fa.fa-close.blog");
+      faCloseBlog.addEventListener("click", () => {
+        viewOneBlogMain.style.display = "none";
+        main1.style.display = "inline-block";
+        viewBlog.style.visibility = "hidden";
+        blogImg.style.filter = "brightness(100%)";
+      });
     });
-    buttonAndImg.addEventListener("mouseout", () => {
-      viewBlog.style.visibility = "hidden";
-      editBlog.style.visibility = "hidden";
-      deleteBlog.style.visibility = "hidden";
-      blogImg.style.filter = "brightness(100%)";
-    });
-
-    const viewOneBlogMain = document.querySelector(".viewOneBlogMain");
-    const bName = document.querySelector(".bName");
-    const bEmail = document.querySelector(".bEmail");
-    const bPhno = document.querySelector(".bPhno");
-    const bTravelSpot = document.querySelector(".bTravelSpot");
-    const bExperience = document.querySelector(".bExperience");
-    const bRating = document.querySelector(".bRating");
-
-    viewBlog.addEventListener("click", () => {
-      bName.textContent = allBlogList[index].name;
-      bEmail.textContent = allBlogList[index].email;
-      bPhno.textContent = allBlogList[index].phno;
-      bTravelSpot.textContent = allBlogList[index].travelSpot;
-      bExperience.textContent = allBlogList[index].experience;
-      bRating.textContent = allBlogList[index].rating;
-
-      viewOneBlogMain.style.display = "inline-block";
-      main1.style.display = "none";
-      // main1.style.visibility="hidden";
-    });
-
-    editBlog.addEventListener("click", async () => {
-      document.querySelector(".editName").value = allBlogList[index].name;
-      document.querySelector(".editPhno").value = allBlogList[index].phno;
-      document.querySelector(".editTravelSpot").value =
-        allBlogList[index].travelSpot;
-      document.querySelector(".editExperience").value =
-        allBlogList[index].experience;
-      console.log(allBlogList[index].rating);
-      document.querySelector(".editRating").value = allBlogList[index].rating;
-      main1.style.display = "none";
-      form2.style.display = "flex";
-      changeIndex = index;
-    });
-
-    closeEditButton.addEventListener("click", () => {
-      main1.style.display = "inline-block";
-      form2.style.display = "none";
-    });
-
-    deleteBlog.addEventListener("click", () => {
-      main1.style.display = "none";
-      deleteBlogSection.style.display = "flex";
-      deleteChangeIndex = index;
-    });
-
-    cancelDeleteButton.addEventListener("click", () => {
-      main1.style.display = "inline-block";
-      deleteBlogSection.style.display = "none";
-    });
-
-    const faCloseBlog = document.querySelector(".fa.fa-close.blog");
-    faCloseBlog.addEventListener("click", () => {
-      viewOneBlogMain.style.display = "none";
-      main1.style.display = "inline-block";
-    });
-  });
+  }
 }
 
 //----------Method to add or edit blog
