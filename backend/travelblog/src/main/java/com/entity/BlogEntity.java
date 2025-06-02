@@ -6,6 +6,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -40,5 +41,9 @@ public class BlogEntity {
 
 	@Column(name = "RATING")
 	private Integer rating;
+
+	@Lob
+	@Column(name = "MEMORIES")
+	private byte[] memories;
 
 }

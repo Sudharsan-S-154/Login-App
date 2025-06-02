@@ -50,7 +50,11 @@ body {
 .menuItemBox div {
   padding: 0.8rem;
   white-space: nowrap;
-  border-bottom: 1px solid black;
+  border-bottom: 0.5px solid black;
+}
+
+.menuItemBox div:last-child {
+  border-bottom: none;
 }
 
 .menuItemBox .myBlogButton:hover {
@@ -85,7 +89,7 @@ body {
   color: transparent;
 }
 
-.header .nav .addButton .btn,
+.addBlogButton1,
 .submitButton,
 .submitEditButton {
   height: 40px;
@@ -98,13 +102,17 @@ body {
   border-radius: 5px;
 }
 
-.header .nav .addButton .btn:hover,
+.addBlogButton1:hover,
 .submitButton:hover,
 .submitEditButton:hover {
   box-shadow: 0 0 5px red, 0 0 10px red, 0 0 15px red, 0 0 20px red;
   background-color: red;
   color: black;
   cursor: pointer;
+}
+
+.addBlogButton2 {
+  display: none;
 }
 
 /********************************/
@@ -117,7 +125,7 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -44%);
+  transform: translate(-50%, -50%);
   flex-direction: column;
   justify-content: center;
   padding: 2rem;
@@ -155,6 +163,16 @@ body {
 
 .blogText {
   text-align: center;
+}
+.uploadMemoriesLabel {
+  background-color: #5a5f70;
+  padding: 0.5rem;
+  color: wheat;
+  cursor: pointer;
+  border-radius: 3px;
+}
+#uploadMemories {
+  display: none;
 }
 
 /**------------------------------*/
@@ -294,7 +312,11 @@ body {
 .nameAndRating {
   display: flex;
   justify-content: space-around;
-  margin-top: 5px;
+  padding-top: 15px;
+  /* margin-top: 2px; */
+  background-color: #21242f;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
 .travelSpotName {
@@ -438,4 +460,44 @@ body {
 
 .confirmDeleteButton:hover {
   background-color: #c0392b;
+}
+
+/******* Media queries **********/
+@media screen and (max-width: 800px) {
+  .addBlogButton1 {
+    display: none;
+  }
+
+  .addBlogButton2 {
+    display: inline-block;
+  }
+
+  .menuItemBox .addBlogButton2:hover {
+    background-color: grey;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+
+  .menuItemBox .myBlogButton:hover {
+    background-color: grey;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+  }
+
+  .menuItemBox .logoutButton:hover {
+    background-color: grey;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+
+  .main2 .addSection,
+  .main2 .editSection {
+    height: auto;
+    width: 350px;
+  }
+
+  .blogandcancel .fa.fa-close {
+  transform: translateX(2rem);
+  cursor: pointer;
+}
 }

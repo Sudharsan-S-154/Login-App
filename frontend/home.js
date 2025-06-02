@@ -2,8 +2,10 @@ const form1 = document.querySelector(".main2 .addSection");
 const form2 = document.querySelector(".main2 .editSection");
 const body = document.getElementsByTagName("body");
 
-const addBlogButton = document.querySelector(".addButton .btn");
+const addBlogButton1 = document.querySelector(".addBlogButton1");
+const addBlogButton2 = document.querySelector(".addBlogButton2");
 const closeBlogButton = document.querySelector(".blogandcancel .fa.fa-close");
+const headerSection = document.querySelector(".header");
 const closeEditButton = document.querySelector(
   ".blogandcancel .fa.fa-close.edit"
 );
@@ -25,13 +27,22 @@ const deleteBlogSection = document.querySelector(".deleteBlogSection");
 const cancelDeleteButton = document.querySelector(".cancelDeleteButton");
 const confirmDeleteButton = document.querySelector(".confirmDeleteButton");
 
-addBlogButton.addEventListener("click", () => {
+addBlogButton1.addEventListener("click", () => {
   // main1.style.filter="blur(20px)";
+  headerSection.style.display = "none";
+  main1.style.display = "none";
+  form1.style.display = "flex";
+});
+
+addBlogButton2.addEventListener("click", () => {
+  // main1.style.filter="blur(20px)";
+  headerSection.style.display = "none";
   main1.style.display = "none";
   form1.style.display = "flex";
 });
 
 closeBlogButton.addEventListener("click", () => {
+  headerSection.style.display = "block";
   form1.style.display = "none";
   main1.style.display = "inline-block";
   // main1.style.filter="blur(0)";
@@ -72,30 +83,31 @@ logoutButton.addEventListener("click", () => {
 
 addBlogForm.addEventListener("submit", async (event) => {
   event.preventDefault();
-  const name = document.querySelector(".name").value;
-  const phno = document.querySelector(".phno").value;
-  const travelSpot = document.querySelector(".travelSpot").value;
-  const experience = document.querySelector(".experience").value;
-  const rating = document.querySelector(".rating").value;
+  // const name = document.querySelector(".name").value;
+  // const phno = document.querySelector(".phno").value;
+  // const travelSpot = document.querySelector(".travelSpot").value;
+  // const experience = document.querySelector(".experience").value;
+  // const rating = document.querySelector(".rating").value;
 
-  let requestObject = {
-    name: name,
-    phno: phno,
-    travelSpot: travelSpot,
-    experience: experience,
-    rating: rating,
-  };
+  // let requestObject = {
+  //   name: name,
+  //   phno: phno,
+  //   travelSpot: travelSpot,
+  //   experience: experience,
+  //   rating: rating,
+  // };
 
+  let addBlogFormData = new FormData(addBlogForm);
+  console.log("addform data====>"+addBlogFormData.get("memories").name);
   const token = localStorage.getItem("token");
   console.log(token);
   // addOrEditBlog(requestObject, token);
   const result = await fetch("http://localhost:8080/blog", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(requestObject),
+    body: addBlogFormData,
   });
 
   const resultJson = await result.json();
@@ -160,8 +172,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   myBlogButton.addEventListener("click", async () => {
-    if(myBlogButton.textContent=="All Blogs"){
-        location.reload();
+    if (myBlogButton.textContent == "All Blogs") {
+      location.reload();
     }
     myblog = true;
     myBlogButton.textContent = "All Blogs";
@@ -297,7 +309,7 @@ function createBlog(resultJson1) {
       }
     }
 
-    if (userDetails.role === "admin" || myblog==true) {
+    if (userDetails.role === "admin" || myblog == true) {
       // console.log("----------------->");
       allBlog.innerHTML = `<div class="buttonAndImg">
                             <img src= "travelblog.jpg"  alt="No content available" class="blogImg"> 
@@ -338,7 +350,7 @@ function addStylesToBlogAdmin() {
   const editBlogs = document.querySelectorAll(".editBlog");
   const deleteBlogs = document.querySelectorAll(".deleteBlog");
 
-  if (userDetails.role == "admin" || myblog==true) {
+  if (userDetails.role == "admin" || myblog == true) {
     buttonAndImgs.forEach((buttonAndImg, index) => {
       const viewBlog = viewBlogs[index];
       const editBlog = editBlogs[index];

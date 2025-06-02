@@ -1,5 +1,6 @@
 package com.service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -8,11 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.Model.BlogGetModel;
 import com.Model.BlogPostModel;
-import com.Model.BlogReadParams;
 import com.Model.ResponseModel;
 import com.authentication.JwtUtility;
 import com.authentication.UserDetailsImp;
@@ -55,6 +54,19 @@ public class BlogService {
 		blogEntity.setTravelSpot(blogPostModel.getTravelSpot());
 		blogEntity.setExperience(blogPostModel.getExperience());
 		blogEntity.setRating(blogPostModel.getRating());
+		System.out.println(blogPostModel.getMemories().getBytes());
+		if (blogPostModel.getMemories() != null && !blogPostModel.getMemories().isEmpty()) {
+		    try {
+		        byte[] byteMemories = blogPostModel.getMemories().getBytes();
+		        System.out.print(byteMemories.toString());
+		        blogEntity.setMemories(byteMemories);
+		    } catch (IOException e) {
+		        e.printStackTrace();
+		        blogEntity.setMemories(null);
+		    }
+		} else {
+		    blogEntity.setMemories(null);
+		}
 
 		blogEntity = blogRepository.save(blogEntity);
 
@@ -91,12 +103,11 @@ public class BlogService {
 				BlogEntity blog = tempBlog.get();
 				blogRepository.deleteById(blogId);
 				response.setData("Blog deleted successfully");
-			}
-			else {
+			} else {
 				response.setError("Error occurs");
 			}
 		} catch (Exception e) {
-                response.setError("Error occurs!!");
+			response.setError("Error occurs!!");
 		}
 		return response;
 	}

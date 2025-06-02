@@ -21,12 +21,13 @@
                 Travel Blog
             </div>
             <div class="addButton">
-                <button class="btn">Add Blog</button>
+                <button class="addBlogButton1">Add Blog</button>
                 <div class="menuIcon">
                     <span></span>
                     <span></span>
                     <span></span>
                     <div class="menuItemBox">
+                        <div class="addBlogButton2" type="button">Add Blog</div>
                         <div class="myBlogButton">My blogs</div>
                         <div class="logoutButton" type="button">Logout</div>
                     </div>
@@ -46,12 +47,13 @@
                     <div class="blogText" style="font-size: 1.5rem; color: #E0E0E0 ;"> Add Your Travel Experience </div>
                     <i class="fa fa-close" style="font-size:24px; color: #E0E0E0;"></i>
                 </div>
-                <input type="text" class="name" placeholder="Name*" required>
-                <input type="text" class="phno" placeholder="Phno*" required>
-                <input type="text" class="travelSpot" placeholder="TravelSpot*" required>
-                <textarea class="experience" placeholder="Experience*" required></textarea>
-                <input class="rating" type="number" min="1" max="5" placeholder="Rating*" required>
-                <!-- <label style="display: inline;">Upload your memories</label><input type="file">  -->
+                <input name="name" type="text" class="name" placeholder="Name*" required>
+                <input name="phno" type="text" class="phno" placeholder="Phno*" required>
+                <input name="travelSpot" type="text" class="travelSpot" placeholder="TravelSpot*" required>
+                <textarea name="experience" class="experience" placeholder="Experience*" required></textarea>
+                <input name="rating" class="rating" type="number" min="1" max="5" placeholder="Rating*" required>
+                <label class="uploadMemoriesLabel" for="uploadMemories">Upload your memories *</label>
+                <input name="memories" type="file" id="uploadMemories" accept="image/*">
                 <button class="submitButton">submit</button>
             </form>
         </section>
@@ -59,7 +61,8 @@
         <section class="editSection">
             <form class="editForm">
                 <div class="blogandcancel">
-                    <div class="blogText" style="font-size: 1.5rem; color: #E0E0E0 ;"> Edit Your Travel Experience </div>
+                    <div class="blogText" style="font-size: 1.5rem; color: #E0E0E0;"> Edit Your Travel Experience
+                    </div>
                     <i class="fa fa-close edit" style="font-size:24px; color: #E0E0E0;"></i>
                 </div>
                 <input type="text" class="editName" placeholder="Name*" required>
